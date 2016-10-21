@@ -1,21 +1,33 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package signal;
 
 import java.util.ArrayList;
 
 /**
- *
- * @author JMoss2
+ * This Class provides the blueprint for an Automatic Signal.
+ * 
+ * For the purposes of the Simulation, an Automatic Signal is any signal that the Signaller does not control (Other than replacement facilities)
+ * @author Jonathan Moss
+ * @version v1.0 October 2016
  */
 public class AutomaticSignal extends Signal {
     
+    private Boolean canTheSignalClear; // This is used as a flag to take interupt Automatic Working.
+    
     public AutomaticSignal(String prefix, String identity, SignalType type, ArrayList signalsArray) {
         super(prefix, identity, type, signalsArray);
+        this.canTheSignalClear = true;
     }
+    
+    public void replaceSignalToDanger() {
+        if (this.getSignalType().equals(SignalType.COLOUR_LIGHT_3) || this.getSignalType().equals(SignalType.COLOUR_LIGHT_4)) {
+            this.signalOn();
+        }
+        
+   
+    }
+    
+    
     
 
     

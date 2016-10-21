@@ -16,8 +16,7 @@ public class Main {
         SIGNALS.add(new ControlledSignal("CE", "185", SignalType.COLOUR_LIGHT_4, SIGNALS));
         SIGNALS.add(new ControlledSignal("CE", "189", SignalType.COLOUR_LIGHT_4, SIGNALS));
         
-        SIGNALS.get(3).getSignalLamps().put(SignalAspect.GREEN, false);
-        SIGNALS.get(0).getSignalLamps().put(SignalAspect.YELLOW, false);
+        //SIGNALS.get(3).getSignalLamps().put(SignalAspect.GREEN, false);
         SIGNALS.get(0).signalOff("CE", "183");
         SIGNALS.get(1).signalOff("CE", "185"); 
         SIGNALS.get(2).signalOff("CE", "189");

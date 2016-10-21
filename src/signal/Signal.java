@@ -1,7 +1,6 @@
 package signal;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -68,11 +67,7 @@ public class Signal implements Signals{
         for (int i = startAspect; i < (startAspect + applicableAspects); i++) {
             signalLamp.put(this.signalType.returnApplicableSignalAspect()[i], true);
         }
-        
-        System.out.println(Arrays.asList(signalLamp)); // method 1
 
-
-       
        this.signalOff = false;
         
     }
@@ -104,7 +99,7 @@ public class Signal implements Signals{
 
     @Override
     public final void signalOn() {
-        
+          
         if (this.signalType.toString().contains("_CA")) {
             // Signals with a Co-acting position light.
             this.currentSignalAspect = this.signalType.returnApplicableSignalAspect()[1];
