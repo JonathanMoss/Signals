@@ -39,6 +39,11 @@ public enum SignalType {
     COLOUR_LIGHT_3(SignalAspect.RED, SignalAspect.YELLOW, SignalAspect.GREEN, SignalAspect.FLASHING_YELLOW, SignalAspect.BLACK),
     
     /**
+     * Co-Acting Colour Light Signal with 3 Aspects.
+     */
+    CA_COLOUR_LIGHT_3(SignalAspect.RED, SignalAspect.YELLOW, SignalAspect.GREEN, SignalAspect.FLASHING_YELLOW, SignalAspect.BLACK),
+    
+    /**
      * 3 Aspect Colour Light Signals with a Co-Acting position Light.
      */
     COLOUR_LIGHT_3_CA(SignalAspect.SUB_OFF, SignalAspect.RED, SignalAspect.YELLOW, SignalAspect.GREEN, SignalAspect.BLACK),
@@ -52,6 +57,11 @@ public enum SignalType {
      * 4 Aspect Colour Light Signal.
      */
     COLOUR_LIGHT_4(SignalAspect.RED, SignalAspect.YELLOW, SignalAspect.DOUBLE_YELLOW, SignalAspect.GREEN, SignalAspect.FLASHING_YELLOW,  SignalAspect.FLASHING_DOUBLE_YELLOW, SignalAspect.TOP_YELLOW, SignalAspect.BLACK),
+    
+    /**
+     * Co-Acting Colour Light Signal with 3 Aspects.
+     */
+    CA_COLOUR_LIGHT_4(SignalAspect.RED, SignalAspect.YELLOW, SignalAspect.DOUBLE_YELLOW, SignalAspect.GREEN, SignalAspect.FLASHING_YELLOW,  SignalAspect.FLASHING_DOUBLE_YELLOW, SignalAspect.TOP_YELLOW, SignalAspect.BLACK),
     
     /**
      * 4 Aspect Colour Light Signal with a Co-Acting position Light.

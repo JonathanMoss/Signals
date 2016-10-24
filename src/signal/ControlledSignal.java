@@ -1,21 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package signal;
 
-import java.util.ArrayList;
-
 /**
- *
- * @author JMoss2
+ * This Class provides the blueprint for a Controlled Signal.
+ * @author Jonathan Moss
+ * @version v1.0 October 2016
  */
 public class ControlledSignal extends Signal {
-   
-    public ControlledSignal(String prefix, String identity, SignalType type, ArrayList signalsArray) {
-        super(prefix, identity, type, signalsArray);
+
+    public ControlledSignal(String signalPrefix, String signalIdentity, SignalType signalType) {
+        super(signalPrefix, signalIdentity, signalType);
     }
+    
+    public void setSignal (Signal toSignal) {
+        toSignal.setSignalInRear(this);
+    }
+
+
+    
+   
    
  
    
