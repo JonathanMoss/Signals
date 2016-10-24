@@ -8,10 +8,15 @@ package signal;
  */
 public class AutomaticSignal extends Signal {
 
-    public AutomaticSignal(String signalPrefix, String signalIdentity, SignalType signalType) {
+    private final Signal applicableSignal;
+    
+    public AutomaticSignal(String signalPrefix, String signalIdentity, SignalType signalType, String applicableSignalPrefix, String applicableSignalIdentity) {
+        
         super(signalPrefix, signalIdentity, signalType);
+        this.applicableSignal = Signal.getSignalObject(applicableSignalPrefix, applicableSignalIdentity);
+        this.applicableSignal.setSignalInRear(this);
+        
     }
-
 
 
     

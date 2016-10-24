@@ -6,10 +6,13 @@ package signal;
  */
 public class RepeaterSignal extends Signal {
 
-    private Signal applicableSignal;
+    private final Signal applicableSignal;
     
     public RepeaterSignal(String signalPrefix, String signalIdentity, SignalType signalType, String applicableSignalPrefix, String applicableSignalIdentity) {
+        
         super(signalPrefix, signalIdentity, signalType);
+        this.applicableSignal = Signal.getSignalObject(applicableSignalPrefix, applicableSignalIdentity);
+        this.applicableSignal.setSignalInRear(this);
         
     }
 

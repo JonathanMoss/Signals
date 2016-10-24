@@ -12,6 +12,7 @@ public abstract class Signal implements Signals {
     public static ArrayList <Signal> SIGNAL_ARRAY;
     private String prefix;
     private String identity;
+    private SignalType signalType;
     private Signal signalInRear;
     
     public static void setSignalArray (ArrayList signalArray) {
@@ -31,6 +32,10 @@ public abstract class Signal implements Signals {
     }
     
     public Signal (String signalPrefix, String signalIdentity, SignalType signalType) {
+        
+        this.prefix = signalPrefix;
+        this.identity = signalIdentity;
+        this.signalType = signalType;
         
     }
 
