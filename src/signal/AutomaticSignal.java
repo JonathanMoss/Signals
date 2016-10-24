@@ -19,12 +19,16 @@ public class AutomaticSignal extends Signal {
         this.canTheSignalClear = true;
     }
     
+    /**
+     * This method is called when there is a need to replace an automatic signal to danger.
+     * 
+     * Note: This action is only applicable to Colour Light automatic signals.
+     */
     public void replaceSignalToDanger() {
         if (this.getSignalType().equals(SignalType.COLOUR_LIGHT_3) || this.getSignalType().equals(SignalType.COLOUR_LIGHT_4)) {
             this.signalOn();
         }
         
-   
     }
     
     
