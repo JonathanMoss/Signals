@@ -8,12 +8,61 @@ package signal;
 public interface Signals {
 
     /**
-     * This method informs the next signal which signal is in rear, and that requires an aspect update.
-     * @param signalInRear <code>Signal</code> The Signal in Rear.
+     * This method adds a reference to a signal in rear that requires an update regarding the signal aspect.
+     * @param signalInRear <code>Signal</code> The Signal in Rear that requires an aspect update.
      */
-    void setSignalInRear (Signal signalInRear);
+    void addSignalInRear (Signal signalInRear);
     
+    /**
+     * This method is used to remove a reference to a signal that no longer requires an aspect update.
+     * @param signalInRear <code>Signal</code> The Signal in Rear that requires an aspect update.
+     */
+    void removeSignalInRear (Signal signalInRear);
     
+    /**
+     * This method provides a Signal Aspect update to all 'Signals In Rear'.
+     * 
+     * This method calls the 'applicableSignalAspectUpdate' method of all those Signals that require an aspect update.
+     */
+    void updateSignalsInRear();
+    
+    /**
+     * This method returns the current Signal Aspect.
+     * @return <code>SignalAspect</code> The current aspect of the signal.
+     */
+    SignalAspect getCurrentAspect();
+    
+    /**
+     * This method returns the Signal Prefix.
+     * @return <code>String</code> The Signal Prefix.
+     */
+    String getPrefix();
 
+    /**
+     * This method returns the Signal Identity.
+     * @return <code>String</code> The Signal Prefix.
+     */
+    String getIdentity();
+
+    /**
+     * This method returns the Signal Type.
+     * @return <code>SignalType</code> The Type of Signal.
+     */
+    SignalType getSignalType();
+    
+    /**
+     * This method updates the aspect of the Applicable Signal.
+     * Called by the Applicable Signal.
+     * @param aspect <code>SignalAspect</code> The Signal Aspect that the Applicable Signal is currently displaying.
+     */
+    void applicableSignalAspectUpdate(SignalAspect aspect);
+    
+    /**
+     * This Method informs the applicable signal that this Signal requires aspect updates.
+     * 
+     * @param applicableSignalPrefix <code>String</code> The Prefix of the Signal that is required to provide aspect updates.
+     * @param applicableSignalIdentity <code>String</code> The Identity of the Signal that is required to provide aspect updates.
+     */
+    void informApplicableSignal (String applicableSignalPrefix, String applicableSignalIdentity);
 
 }

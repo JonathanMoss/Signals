@@ -11,18 +11,6 @@ public class ControlledSignal extends Signal {
         super(signalPrefix, signalIdentity, signalType);
     }
     
-    public void setSignal (Signal toSignal) {
-        toSignal.setSignalInRear(this);
-    }
-
-
-    
-   
-   
- 
-   
-
-   
 
    
 }
