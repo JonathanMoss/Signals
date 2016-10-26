@@ -24,8 +24,8 @@ public class Main {
         SIGNALS.add(new ControlledSignal ("CE", "196", SignalType.COLOUR_LIGHT_4));
 
         ((ControlledSignal) getSignalObject("CE", "198")).setSignal("CE", "192");
-        getSignalObject("CE", "190").failSignalLamp(SignalAspect.YELLOW);
-        ((ControlledSignal) getSignalObject("CE", "190")).setSignal("CE", "186");
+        ((ControlledSignal) getSignalObject("CE", "190")).setSignal("CE", "186", SignalAspect.YELLOW);
+        //((ControlledSignal) getSignalObject("CE", "190")).setSignal("CE", "186");
         ((ControlledSignal) getSignalObject("CE", "186")).setSignal("CE", "184");
         
         for (int i = 0; i < SIGNALS.size(); i++) {

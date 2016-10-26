@@ -22,6 +22,7 @@ public class Signal implements Signals {
     private SignalAspect currentAspect; // The current aspect of the signal.
     private final Map <SignalAspect, Boolean> signalLamps = new LinkedHashMap<>(); // A Map that contains the Signal Lamps and an indication if the lamps are proved to be lit.
     private Boolean displayHighestAspect = false; // A Flag to set if the signal can display the highest aspect available - in other words step up.
+    private SignalAspect doNotStepHigherThan = null;
     
     /**
      * This method allows this class to reference the ArrayList that contains all Signal Objects.
@@ -273,7 +274,13 @@ public class Signal implements Signals {
     public final void DisplayHighestAspect() {
         
         if (this.displayHighestAspect) {
-            this.DisplayAspect(this.calculateBestAspect()); // Go for it! Show a proceed aspect, at the least restrictive aspect available.
+            
+            if (this.doNotStepHigherThan == null) {
+                this.DisplayAspect(this.calculateBestAspect()); // Go for it! Show a proceed aspect, at the least restrictive aspect available.
+            } else {
+                this.DisplayAspect(this.doNotStepHigherThan);
+            }
+            
         } else {
             Map.Entry<SignalAspect, Boolean> lampMap = this.signalLamps.entrySet().iterator().next();
             this.DisplayAspect(lampMap.getKey()); // Show the lowest aspect available.
@@ -288,8 +295,19 @@ public class Signal implements Signals {
 
     @Override
     public void setDisplayHighestAspect(Boolean displayHighestAspect) {
+        
+        this.doNotStepHigherThan = null;
         this.displayHighestAspect = displayHighestAspect;
         this.DisplayHighestAspect();
+    }
+    
+    @Override
+    public void setDisplayHighestAspect(SignalAspect aspect) {
+    
+        this.doNotStepHigherThan = aspect;
+        this.displayHighestAspect = true;
+        this.DisplayHighestAspect();
+        
     }
 
     @Override
@@ -324,6 +342,10 @@ public class Signal implements Signals {
             
             SignalAspect newAspect;
             
+            if (this.doNotStepHigherThan != null && !this.validateAspectAgainstNextAspect(this.doNotStepHigherThan)) {
+                aspect = SignalAspect.RED;
+            }
+
             switch (aspect) {
                 
                 case DOUBLE_YELLOW: // We need special consideration for a 4 aspect signal in connection with Double Yellow.
@@ -360,11 +382,6 @@ public class Signal implements Signals {
     }
 
     @Override
-    public void setDisplayHighestAspect(SignalAspect aspect) {
-        
-    }
-
-    @Override
     public Boolean isAspectValid(SignalAspect aspect) {
         
         if (Arrays.toString(this.signalType.returnApplicableSignalAspect()).contains(aspect.toString())) {
@@ -373,6 +390,31 @@ public class Signal implements Signals {
             return false;
         }
         
+    }
+
+    @Override
+    public Boolean validateAspectAgainstNextAspect(SignalAspect aspect) {
+        
+        int thisSignalAspect = 0;
+        int nextSignalAspect = 0;
+        
+        for (int i = 0; i < SignalAspect.values().length; i++) {
+            
+            if (SignalAspect.values()[i].equals(aspect)) {
+                thisSignalAspect = i;
+            }
+            
+            if (SignalAspect.values()[i].equals(this.applicableSignalAspect)) {
+                nextSignalAspect = i;
+            }
+            
+            if (nextSignalAspect <= thisSignalAspect) {
+                return true;
+            }
+            
+        }
+        
+        return false;
     }
 
 }

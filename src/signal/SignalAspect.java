@@ -13,41 +13,14 @@ package signal;
 public enum SignalAspect {
     
     /**
-     * Applicable to all Colour Light Stop Signals, LOS, Buffer Stops and Fixed Red Signals. 
-     */
-    RED, 
-    
-    /**
-     * Applicable to all Colour Light Signals.
-     */
-    YELLOW, 
-    
-    /**
      * Applicable to Position Light Signals or 4/3 Colour Light Signals with Co-acting Position Light (CA).
      */
     SUB_OFF, 
     
     /**
-     * Applicable to Colour Light Signals only.
-     * There is no aspect or indication being displayed at the Signal.
+     * Applicable to all Colour Light Stop Signals, LOS, Buffer Stops and Fixed Red Signals. 
      */
-    BLACK, 
-    
-    /**
-     * Applicable to 4 aspect Colour Light Signals only, where the bottom yellow lamp has blown.
-     */
-    TOP_YELLOW, 
-    
-    /**
-     * Applicable to 4 aspect Colour Light Signals only.
-     * The next signal is displaying a yellow aspect.
-     */
-    DOUBLE_YELLOW, 
-    
-    /**
-     * Applicable to Colour Light Signals.
-     */
-    GREEN, 
+    RED, 
     
     /**
      * Applicable to Banner Repeaters only.
@@ -62,6 +35,11 @@ public enum SignalAspect {
     CLEAR, 
     
     /**
+     * Applicable to all Colour Light Signals.
+     */
+    YELLOW, 
+    
+    /**
      * Applicable to flashing aspect junction indication (3 and 4 aspect).
      * GREEN > FLASHING_DOUBLE_YELLOW > FLASHING YELLOW > YELLOW (This is the junction signal, it steps up to YY or G on approach - if able to do so), or
      * GREEN > FLASHING_YELLOW > YELLOW (This is the junction signal, it steps up to G on approach - if able to do so). 
@@ -69,11 +47,33 @@ public enum SignalAspect {
     FLASHING_YELLOW, 
     
     /**
+     * Applicable to 4 aspect Colour Light Signals only.
+     * The next signal is displaying a yellow aspect.
+     */
+    DOUBLE_YELLOW, 
+
+    /**
      * Applicable to flashing aspect junction indication (4 aspect).
      * GREEN > FLASHING_DOUBLE_YELLOW > FLASHING YELLOW > YELLOW (This is the junction signal, it steps up to YY or G on approach - if able to do so).
      */
     FLASHING_DOUBLE_YELLOW, 
     
+    /**
+     * Applicable to 4 aspect Colour Light Signals only, where the bottom yellow lamp has blown.
+     */
+    TOP_YELLOW, 
+    
+    /**
+     * Applicable to Colour Light Signals.
+     */
+    GREEN,
+    
+    /**
+     * Applicable to Colour Light Signals only.
+     * There is no aspect or indication being displayed at the Signal.
+     */
+    BLACK, 
+
     /**
      * Only applicable to POSA.
      * 2 flashing white lights.

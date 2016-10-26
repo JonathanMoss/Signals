@@ -132,4 +132,11 @@ public interface Signals {
      * @return <code>Boolean</code> <i>'true'</i> is returned to indicate the aspect is valid for the signal type, otherwise <i>'false'</i>.
      */
     Boolean isAspectValid (SignalAspect aspect);
+    
+    /**
+     * This method is used to validate a restricted aspect, against the aspect of the next signal.
+     * @param aspect <code>SignalAspect</code> The restricted aspect.
+     * @return <code>Boolean</code> <i>'true'</i> is returned to indicate the aspect is valid, otherwise <i>'false'</i>.
+     */
+    Boolean validateAspectAgainstNextAspect (SignalAspect aspect);
 }
