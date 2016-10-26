@@ -1,6 +1,7 @@
 package signal;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -126,8 +127,14 @@ public class Signal implements Signals {
     @Override
     public void updateSignalsInRear() {
     
+        SignalAspect curAspect = this.currentAspect;
+        
+        if (this.currentAspect == SignalAspect.TOP_YELLOW) {
+            curAspect = SignalAspect.DOUBLE_YELLOW;
+        }
+        
         for (int i = 0; i < this.signalsInRear.size(); i++) {
-            this.signalsInRear.get(i).applicableSignalAspectUpdate(this.currentAspect);
+            this.signalsInRear.get(i).applicableSignalAspectUpdate(curAspect);
         }
         
     }
@@ -265,13 +272,11 @@ public class Signal implements Signals {
     public final void DisplayHighestAspect() {
         
         if (this.displayHighestAspect) {
-            this.currentAspect = this.calculateBestAspect();
+            this.DisplayAspect(this.calculateBestAspect());
         } else {
-           Map.Entry<SignalAspect, Boolean> lampMap = this.signalLamps.entrySet().iterator().next();
-            this.currentAspect = lampMap.getKey(); 
+            Map.Entry<SignalAspect, Boolean> lampMap = this.signalLamps.entrySet().iterator().next();
+            this.DisplayAspect(lampMap.getKey()); 
         }
-        
-        this.updateSignalsInRear(); 
         
     }
 
@@ -314,12 +319,56 @@ public class Signal implements Signals {
     @Override
     public void DisplayAspect(SignalAspect aspect) {
         
-        
+        if (this.isAspectValid(aspect)) { // Validate the aspect for this signal type.
+            
+            SignalAspect newAspect;
+            
+            switch (aspect) {
+                
+                case DOUBLE_YELLOW:
+                    
+                    if (!this.signalLamps.get(aspect)) {
+                        newAspect = SignalAspect.YELLOW;
+                    } else if (!this.signalLamps.get(SignalAspect.YELLOW)) {
+                        newAspect = SignalAspect.TOP_YELLOW;
+                    } else {
+                        newAspect = SignalAspect.DOUBLE_YELLOW;
+                    }
+                    break;
+                    
+                default:
+
+                    if (this.signalLamps.containsKey(aspect) && !this.signalLamps.get(aspect)) {
+                        newAspect = SignalAspect.BLACK;
+                    } else {
+                        newAspect = aspect;
+                    }
+            } 
+         
+            if (this.currentAspect != newAspect) {
+            
+                this.currentAspect = newAspect;
+                this.updateSignalsInRear();
+                
+            }
+            
+        }
         
     }
 
     @Override
     public void setDisplayHighestAspect(SignalAspect aspect) {
+        
+    }
+
+    @Override
+    public Boolean isAspectValid(SignalAspect aspect) {
+        
+        if (Arrays.toString(this.signalType.returnApplicableSignalAspect()).contains(aspect.toString())) {
+            return true;
+        } else {
+            return false;
+        }
         
     }
 

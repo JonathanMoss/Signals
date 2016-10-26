@@ -125,4 +125,11 @@ public interface Signals {
      * @param aspect <code>SignalAspect</code> The SignalAspect that should be displayed, if able to do so.
      */
     void DisplayAspect (SignalAspect aspect);
+    
+    /**
+     * This method is used to validate a particular aspect, as being valid for the Signal Type
+     * @param aspect <code>SignalAspect</code> The Signal Aspect to validate
+     * @return <code>Boolean</code> <i>'true'</i> is returned to indicate the aspect is valid for the signal type, otherwise <i>'false'</i>.
+     */
+    Boolean isAspectValid (SignalAspect aspect);
 }
