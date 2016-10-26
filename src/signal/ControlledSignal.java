@@ -38,6 +38,25 @@ public class ControlledSignal extends Signal {
         
     }
     
+    /**
+     * This method attempts to clear the signal, to the highest aspect passed with the parameters.
+     * 
+     * This method is used when, for example setting an approach control from other than red.
+     * 
+     * @param toSignalPrefix <code>String</code> The Prefix of the signal that the route is being set to.
+     * @param toSignalIdentity <code>String</code> The Identity of the signal that the route is being set to.
+     * @param highestAspect <code>SignalAspect</code> The highest aspect that the signal should display.
+     */
+    public void setSignal (String toSignalPrefix, String toSignalIdentity, SignalAspect highestAspect) {
+    
+        this.toSignalPrefix = toSignalPrefix;
+        this.toSignalIdentity = toSignalIdentity;
+        
+        super.informApplicableSignal(toSignalPrefix, toSignalIdentity);
+        super.setDisplayHighestAspect(highestAspect);
+        
+    }
+    
     public void signalOn() {
         
         super.setDisplayHighestAspect(false);
@@ -45,6 +64,4 @@ public class ControlledSignal extends Signal {
         
     }
     
-
-   
 }

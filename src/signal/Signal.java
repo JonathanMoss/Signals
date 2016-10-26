@@ -286,4 +286,41 @@ public class Signal implements Signals {
         this.DisplayHighestAspect();
     }
 
+    @Override
+    public void failSignalLamp(SignalAspect aspect) {
+        
+        if (this.signalLamps.containsKey(aspect)) {
+            this.signalLamps.replace(aspect, false);
+        }
+        
+    }
+
+    @Override
+    public void restoreSignalLamp(SignalAspect aspect) {
+        
+        if (this.signalLamps.containsKey(aspect)) {
+            this.signalLamps.replace(aspect, true);
+        }
+        
+    }
+
+    @Override
+    public Map<SignalAspect, Boolean> getSignalLampMap() {
+        
+        return this.signalLamps;
+        
+    }
+
+    @Override
+    public void DisplayAspect(SignalAspect aspect) {
+        
+        
+        
+    }
+
+    @Override
+    public void setDisplayHighestAspect(SignalAspect aspect) {
+        
+    }
+
 }

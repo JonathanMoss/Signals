@@ -1,5 +1,7 @@
 package signal;
 
+import java.util.Map;
+
 /**
  * This interface contains mandatory methods for the Signal class.
  * @author Jonathan Moss
@@ -93,4 +95,34 @@ public interface Signals {
      * @param displayHighestAspect <code>Boolean</code> <i>'true'</i> indicates the highest aspect can be displayed, otherwise <i>'false'</i>.
      */
     void setDisplayHighestAspect(Boolean displayHighestAspect);
+    
+    /**
+     * This method is used to display a proceed aspect, but not to display higher than the aspect passed in the parameter.
+     * @param aspect <code>Signal Aspect</code> The maximum signal aspect that can be displayed.
+     */
+    void setDisplayHighestAspect(SignalAspect aspect);
+    
+    /**
+     * This method is used to fail Signal Lamp proving for a given aspect.
+     * @param aspect <code>SignalAspect</code> The aspect that Lamp Proving failure is required.
+     */
+    void failSignalLamp (SignalAspect aspect);
+    
+    /**
+     * This method is used to restore Signal Lamp proving for a given aspect.
+     * @param aspect <code>SignalAspect</code> The aspect that Lamp Proving restoration is required.
+     */
+    void restoreSignalLamp (SignalAspect aspect);
+    
+    /**
+     * This method returns the Signal Lamp Map.
+     * @return Map <code>LinkedHashMap</code> that contains the Signal Lamps and proving status.
+     */
+    Map <SignalAspect, Boolean> getSignalLampMap();
+    
+    /**
+     * This method attempts to display the provided aspect, if able to do so.
+     * @param aspect <code>SignalAspect</code> The SignalAspect that should be displayed, if able to do so.
+     */
+    void DisplayAspect (SignalAspect aspect);
 }
