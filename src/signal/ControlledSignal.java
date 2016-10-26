@@ -7,6 +7,8 @@ package signal;
  */
 public class ControlledSignal extends Signal {
 
+    String toSignalPrefix, toSignalIdentity;
+    
     /**
      * This is the Constructor Method for a ControlledSignal Object
      * 
@@ -17,6 +19,7 @@ public class ControlledSignal extends Signal {
     public ControlledSignal(String signalPrefix, String signalIdentity, SignalType signalType) {
         
         super(signalPrefix, signalIdentity, signalType);
+        super.setDisplayHighestAspect(false);
         
     }
     
@@ -26,7 +29,20 @@ public class ControlledSignal extends Signal {
      * @param toSignalIdentity <code>String</code> The Identity of the signal that the route is being set to.
      */
     public void setSignal (String toSignalPrefix, String toSignalIdentity) {
+        
+        this.toSignalPrefix = toSignalPrefix;
+        this.toSignalIdentity = toSignalIdentity;
+        
         super.informApplicableSignal(toSignalPrefix, toSignalIdentity);
+        super.setDisplayHighestAspect(true);
+        
+    }
+    
+    public void signalOn() {
+        
+        super.setDisplayHighestAspect(false);
+        Signal.getSignalObject(this.toSignalPrefix, this.toSignalIdentity).removeSignalInRear(this);
+        
     }
     
 

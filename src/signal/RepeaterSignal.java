@@ -19,7 +19,8 @@ public class RepeaterSignal extends Signal {
         
         super(signalPrefix, signalIdentity, signalType);
         super.informApplicableSignal (applicableSignalPrefix, applicableSignalIdentity);
-
+        super.setDisplayHighestAspect(true);
+        
     }
 
 }

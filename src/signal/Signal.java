@@ -19,7 +19,8 @@ public class Signal implements Signals {
     private final ArrayList <Signal> signalsInRear; // An ArrayList that contains all signals that require an Aspect Update.
     private SignalAspect applicableSignalAspect; // The aspect of the signal ahead.
     private SignalAspect currentAspect; // The current aspect of the signal.
-    private Map <SignalAspect, Boolean> signalLamps = new LinkedHashMap<>();
+    private final Map <SignalAspect, Boolean> signalLamps = new LinkedHashMap<>();
+    private Boolean displayHighestAspect = false;
     
     /**
      * This method allows this class to reference the ArrayList that contains all Signal Objects.
@@ -64,7 +65,7 @@ public class Signal implements Signals {
         this.signalType = signalType;
         
         this.createSignalLamps();
-        
+        this.DisplayHighestAspect();
         
     }
 
@@ -105,6 +106,8 @@ public class Signal implements Signals {
     @Override
     public void applicableSignalAspectUpdate(SignalAspect aspect) {
         this.applicableSignalAspect = aspect;
+        this.DisplayHighestAspect(); 
+        
     }
     
     @Override
@@ -136,6 +139,15 @@ public class Signal implements Signals {
 
     @Override
     public SignalAspect calculateBestAspect() {
+        
+        if (this.applicableSignalAspect == null) {
+            this.applicableSignalAspect = SignalAspect.RED;
+        }
+        
+        if (this.getIdentity().contains("CA")) {
+            return this.applicableSignalAspect;
+        }
+        
         switch (this.applicableSignalAspect) {
         
             case SPAD_INDICATOR_ILLUMINATED:
@@ -247,6 +259,31 @@ public class Signal implements Signals {
             
         }
         
+    }
+    
+    @Override
+    public final void DisplayHighestAspect() {
+        
+        if (this.displayHighestAspect) {
+            this.currentAspect = this.calculateBestAspect();
+        } else {
+           Map.Entry<SignalAspect, Boolean> lampMap = this.signalLamps.entrySet().iterator().next();
+            this.currentAspect = lampMap.getKey(); 
+        }
+        
+        this.updateSignalsInRear(); 
+        
+    }
+
+    @Override
+    public Boolean getDisplayHighestAspect() {
+        return displayHighestAspect;
+    }
+
+    @Override
+    public void setDisplayHighestAspect(Boolean displayHighestAspect) {
+        this.displayHighestAspect = displayHighestAspect;
+        this.DisplayHighestAspect();
     }
 
 }

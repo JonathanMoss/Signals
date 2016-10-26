@@ -76,4 +76,21 @@ public interface Signals {
      * This method is called by the constructor and creates a map that contains a Signal Lamp for each relevant Signal Aspect.
      */
     void createSignalLamps();
+    
+    /**
+     * This method determines if the signal can display the highest (least restrictive) aspect available.
+     */
+    void DisplayHighestAspect();
+    
+    /**
+     * This method returns the Display Highest Aspect Flag.
+     * @return <code>Boolean</code> <i>'true'</i> indicates the highest aspect can be displayed, otherwise <i>'false'</i>.
+     */
+    Boolean getDisplayHighestAspect();
+    
+    /**
+     * This method sets the Display Highest Aspect Flag.
+     * @param displayHighestAspect <code>Boolean</code> <i>'true'</i> indicates the highest aspect can be displayed, otherwise <i>'false'</i>.
+     */
+    void setDisplayHighestAspect(Boolean displayHighestAspect);
 }

@@ -21,7 +21,22 @@ public class AutomaticSignal extends Signal {
         
         super(signalPrefix, signalIdentity, signalType);
         super.informApplicableSignal (applicableSignalPrefix, applicableSignalIdentity);
+        super.setDisplayHighestAspect(true);
         
+    }
+    
+    /**
+     * This method Simulates an Automatic Signal Being Replaced to Danger.
+     */
+    public void replaceToDanger() {
+        super.setDisplayHighestAspect(false);
+    }
+    
+    /**
+     * This method simulates the ability to restore an automatic signal to automatic working following being replaced to danger.
+     */
+    public void restoreReplacement() {
+        super.setDisplayHighestAspect(true);
     }
 
     
