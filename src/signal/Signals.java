@@ -65,4 +65,15 @@ public interface Signals {
      */
     void informApplicableSignal (String applicableSignalPrefix, String applicableSignalIdentity);
 
+    /**
+     * This method calculates the highest aspect that can be displayed at the signal.
+     * 
+     * @return <code>SignalAspect</code> The highest Aspect that can be displayed at the signal.
+     */
+    SignalAspect calculateBestAspect();
+    
+    /**
+     * This method is called by the constructor and creates a map that contains a Signal Lamp for each relevant Signal Aspect.
+     */
+    void createSignalLamps();
 }

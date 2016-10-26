@@ -13,12 +13,35 @@ public class Main {
 
         Signal.setSignalArray(SIGNALS);
         
+        SIGNALS.add(new ControlledSignal ("CE", "198", SignalType.COLOUR_LIGHT_3));
+        SIGNALS.add(new ControlledSignal ("CE", "196", SignalType.COLOUR_LIGHT_3));
         SIGNALS.add(new ControlledSignal ("CE", "190", SignalType.COLOUR_LIGHT_3));
-        SIGNALS.add(new RepeaterSignal ("CE", "190CA", SignalType.COLOUR_LIGHT_3, "CE", "190"));
-        SIGNALS.add(new RepeaterSignal ("CE", "190R", SignalType.COLOUR_LIGHT_REPEATER, "CE", "190"));
+        SIGNALS.add(new ControlledSignal ("CE", "186", SignalType.COLOUR_LIGHT_3));
+        SIGNALS.add(new ControlledSignal ("CE", "184", SignalType.COLOUR_LIGHT_3));
+        
         SIGNALS.add(new AutomaticSignal ("CE", "192", SignalType.COLOUR_LIGHT_REPEATER, "CE", "190"));
-        SIGNALS.add(new ControlledSignal ("CE", "198", SignalType.COLOUR_LIGHT_3));
-        SIGNALS.add(new ControlledSignal ("CE", "198", SignalType.COLOUR_LIGHT_3));
+        
+        SIGNALS.add(new RepeaterSignal ("CE", "190R", SignalType.COLOUR_LIGHT_REPEATER, "CE", "190"));
+        SIGNALS.add(new RepeaterSignal ("CE", "190CA", SignalType.COLOUR_LIGHT_3, "CE", "190"));
+        SIGNALS.add(new RepeaterSignal ("CE", "R184", SignalType.COLOUR_LIGHT_REPEATER, "CE", "184"));
+        
+        ((ControlledSignal) getSignalObject("CE", "198")).setSignal("CE", "192");
+        ((ControlledSignal) getSignalObject("CE", "190")).setSignal("CE", "186");
+        ((ControlledSignal) getSignalObject("CE", "186")).setSignal("CE", "184");
+    }
+    
+    
+    // This method returns a Signal Object based on the Prefix and Identity passed as parameters.
+    private static Signal getSignalObject (String prefix, String identity) {
+        
+        for (int i = 0; i < SIGNALS.size(); i ++) {
+            if (SIGNALS.get(i).getPrefix().equals(prefix) && SIGNALS.get(i).getIdentity().equals(identity)) {
+                return SIGNALS.get(i);
+            }
+        }
+        
+        return null;
+        
     }
     
 }

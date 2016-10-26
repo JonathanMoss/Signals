@@ -1,6 +1,8 @@
 package signal;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * This Class provides the Superclass functionality for a Signal Object.
@@ -17,6 +19,7 @@ public class Signal implements Signals {
     private final ArrayList <Signal> signalsInRear; // An ArrayList that contains all signals that require an Aspect Update.
     private SignalAspect applicableSignalAspect; // The aspect of the signal ahead.
     private SignalAspect currentAspect; // The current aspect of the signal.
+    private Map <SignalAspect, Boolean> signalLamps = new LinkedHashMap<>();
     
     /**
      * This method allows this class to reference the ArrayList that contains all Signal Objects.
@@ -59,6 +62,9 @@ public class Signal implements Signals {
         this.prefix = signalPrefix;
         this.identity = signalIdentity;
         this.signalType = signalType;
+        
+        this.createSignalLamps();
+        
         
     }
 
@@ -126,6 +132,121 @@ public class Signal implements Signals {
     @Override
     public SignalAspect getCurrentAspect() {
         return this.currentAspect;
+    }
+
+    @Override
+    public SignalAspect calculateBestAspect() {
+        switch (this.applicableSignalAspect) {
+        
+            case SPAD_INDICATOR_ILLUMINATED:
+            case BLACK:
+            case TOP_YELLOW:
+                if (this instanceof RepeaterSignal) {
+                    return SignalAspect.CAUTION;
+                } else {
+                    return SignalAspect.RED;
+                }
+                
+            case SUB_OFF:
+            case FLASHING_WHITE:
+            case RED:
+                if (this instanceof RepeaterSignal) {
+                    return SignalAspect.CAUTION;
+                } else {
+                    return SignalAspect.YELLOW;
+                }
+                
+            case YELLOW:
+                if (this instanceof RepeaterSignal) {
+                    return SignalAspect.CLEAR;
+                } else {
+                    if (this.getSignalType().toString().contains("_4")) {
+                        return SignalAspect.DOUBLE_YELLOW;
+                    } else {
+                        return SignalAspect.GREEN;
+                    }
+                }
+                
+            case GREEN:
+            case FLASHING_DOUBLE_YELLOW:
+            case DOUBLE_YELLOW:
+                if (this instanceof RepeaterSignal) {
+                    return SignalAspect.CLEAR;
+                } else {
+                    return SignalAspect.GREEN;
+                }
+            
+            case FLASHING_YELLOW:
+                if (this instanceof RepeaterSignal) {
+                    return SignalAspect.CLEAR;
+                } else {
+                    if (this.getSignalType().toString().contains("_4")) {
+                        return SignalAspect.FLASHING_DOUBLE_YELLOW;
+                    } else {
+                        return SignalAspect.GREEN;
+                    }
+                }
+
+        }
+        
+        return SignalAspect.RED;
+        
+    }
+
+    @Override
+    public final void createSignalLamps() {
+        
+        int numberOfApplicableAspects = 0;
+        int startingPointWithinArray = 0;
+        
+        switch (this.getSignalType()) {
+            
+            case SPAD_INDICATOR:
+            case FIXED_RED:
+                numberOfApplicableAspects = 1;
+                startingPointWithinArray = 0;
+                break;
+                
+            case COLOUR_LIGHT_REPEATER:
+            case BANNER:
+            case POS_LIGHT:
+                numberOfApplicableAspects = 2;
+                startingPointWithinArray = 0;
+                break;
+                
+            case CA_COLOUR_LIGHT_3:
+            case COLOUR_LIGHT_3:
+            case POS_LIGHT_POSA:
+                numberOfApplicableAspects = 3;
+                startingPointWithinArray = 0;
+                break;
+                
+            case COLOUR_LIGHT_3_CA_POSA:
+            case COLOUR_LIGHT_3_CA:
+                numberOfApplicableAspects = 3;
+                startingPointWithinArray = 1;
+                break;
+            
+            case CA_COLOUR_LIGHT_4:
+            case COLOUR_LIGHT_4:
+                numberOfApplicableAspects = 4;
+                startingPointWithinArray = 0;
+                break;
+                
+            case COLOUR_LIGHT_4_CA:
+            case COLOUR_LIGHT_4_CA_POSA:
+                numberOfApplicableAspects = 4;
+                startingPointWithinArray = 1;
+                break;
+
+        }
+        
+        for (int i = startingPointWithinArray; i < (numberOfApplicableAspects + startingPointWithinArray); i++) {
+            
+            this.signalLamps.put(this.getSignalType().returnApplicableSignalAspect()[i], true);
+            
+        }
+        
     }
 
 }

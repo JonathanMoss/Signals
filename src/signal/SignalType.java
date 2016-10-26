@@ -31,7 +31,7 @@ public enum SignalType {
     /**
      * Colour Light Repeater Signals.
      */
-    COLOUR_LIGHT_REPEATER(SignalAspect.YELLOW, SignalAspect.GREEN, SignalAspect.BLACK),
+    COLOUR_LIGHT_REPEATER(SignalAspect.CAUTION, SignalAspect.CLEAR, SignalAspect.BLACK),
     
     /**
      * Colour Light Signal with 3 Aspects.
