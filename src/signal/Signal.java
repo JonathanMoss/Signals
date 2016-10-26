@@ -20,8 +20,8 @@ public class Signal implements Signals {
     private final ArrayList <Signal> signalsInRear; // An ArrayList that contains all signals that require an Aspect Update.
     private SignalAspect applicableSignalAspect; // The aspect of the signal ahead.
     private SignalAspect currentAspect; // The current aspect of the signal.
-    private final Map <SignalAspect, Boolean> signalLamps = new LinkedHashMap<>();
-    private Boolean displayHighestAspect = false;
+    private final Map <SignalAspect, Boolean> signalLamps = new LinkedHashMap<>(); // A Map that contains the Signal Lamps and an indication if the lamps are proved to be lit.
+    private Boolean displayHighestAspect = false; // A Flag to set if the signal can display the highest aspect available - in other words step up.
     
     /**
      * This method allows this class to reference the ArrayList that contains all Signal Objects.
@@ -60,13 +60,12 @@ public class Signal implements Signals {
      */
     public Signal (String signalPrefix, String signalIdentity, SignalType signalType) {
         
-        this.signalsInRear = new ArrayList<>();
-        this.prefix = signalPrefix;
-        this.identity = signalIdentity;
-        this.signalType = signalType;
-        
-        this.createSignalLamps();
-        this.DisplayHighestAspect();
+        this.signalsInRear = new ArrayList<>(); // Setup up the Signals In Rear ArrayList.
+        this.prefix = signalPrefix; // Assign the Signal Prefix.
+        this.identity = signalIdentity; // Assign the Signal Identity.
+        this.signalType = signalType; // Assign the Signal Type.
+        this.createSignalLamps(); // Call the method that creates Signal Lamps for each of the relevant Aspects.
+        this.DisplayHighestAspect(); // Call the method to assign an aspect into the Signal based on circumstances.
         
     }
 
@@ -148,14 +147,16 @@ public class Signal implements Signals {
     public SignalAspect calculateBestAspect() {
         
         if (this.applicableSignalAspect == null) {
-            this.applicableSignalAspect = SignalAspect.RED;
+            this.applicableSignalAspect = SignalAspect.RED; // Assign a default where no Aspect for the Applicable Signal has been provided (yet).
         }
         
+        // If the Signal is Co-Acting, then the Signal should display an identical aspect.
         if (this.getIdentity().contains("CA")) {
             return this.applicableSignalAspect;
         }
         
-        switch (this.applicableSignalAspect) {
+        // Look at what the Applicable Signal is currently displaying, then decide on an apppropriate aspect to display in this signal.
+        switch (this.applicableSignalAspect) { 
         
             case SPAD_INDICATOR_ILLUMINATED:
             case BLACK:
@@ -262,7 +263,7 @@ public class Signal implements Signals {
         
         for (int i = startingPointWithinArray; i < (numberOfApplicableAspects + startingPointWithinArray); i++) {
             
-            this.signalLamps.put(this.getSignalType().returnApplicableSignalAspect()[i], true);
+            this.signalLamps.put(this.getSignalType().returnApplicableSignalAspect()[i], true); // Create the Signal Lamp Map Entry.
             
         }
         
@@ -272,10 +273,10 @@ public class Signal implements Signals {
     public final void DisplayHighestAspect() {
         
         if (this.displayHighestAspect) {
-            this.DisplayAspect(this.calculateBestAspect());
+            this.DisplayAspect(this.calculateBestAspect()); // Go for it! Show a proceed aspect, at the least restrictive aspect available.
         } else {
             Map.Entry<SignalAspect, Boolean> lampMap = this.signalLamps.entrySet().iterator().next();
-            this.DisplayAspect(lampMap.getKey()); 
+            this.DisplayAspect(lampMap.getKey()); // Show the lowest aspect available.
         }
         
     }
@@ -325,30 +326,32 @@ public class Signal implements Signals {
             
             switch (aspect) {
                 
-                case DOUBLE_YELLOW:
+                case DOUBLE_YELLOW: // We need special consideration for a 4 aspect signal in connection with Double Yellow.
                     
-                    if (!this.signalLamps.get(aspect)) {
-                        newAspect = SignalAspect.YELLOW;
-                    } else if (!this.signalLamps.get(SignalAspect.YELLOW)) {
-                        newAspect = SignalAspect.TOP_YELLOW;
+                    if (!this.signalLamps.get(aspect)) { // Double Yellow Requested, Double Yellow Aspect Lamp showing false.
+                        newAspect = SignalAspect.YELLOW; // Show a Yellow Aspect.
+                    } else if (!this.signalLamps.get(SignalAspect.YELLOW)) { // Double Yellow Requested, Bottom Yellow (Yellow) Aspect Lamp showing false.
+                        newAspect = SignalAspect.TOP_YELLOW; // Display only a TOP_YELLOW Signal Aspect.
                     } else {
-                        newAspect = SignalAspect.DOUBLE_YELLOW;
+                        newAspect = SignalAspect.DOUBLE_YELLOW; // Otherwise just display the DOUBLE_YELLOW.
                     }
                     break;
                     
-                default:
+                default: // Everything Else.
 
+                    // Check if the requested aspect is listed in the SignalLamps Map, and check if the Lamp Value is set to false.
                     if (this.signalLamps.containsKey(aspect) && !this.signalLamps.get(aspect)) {
-                        newAspect = SignalAspect.BLACK;
+                        newAspect = SignalAspect.BLACK; // If so, this indicates the Lamp is out, show a Black Signal.
                     } else {
-                        newAspect = aspect;
+                        newAspect = aspect; // Otherwise, just show the Signal Aspect as desired.
                     }
             } 
          
+            // If the aspect has changed, make sure that all signals in rear that need notification have been notified.
             if (this.currentAspect != newAspect) {
-            
+                
                 this.currentAspect = newAspect;
-                this.updateSignalsInRear();
+                this.updateSignalsInRear(); // We only provide updates to Signals In Rear here to make sure that we dont send an update every time.
                 
             }
             
